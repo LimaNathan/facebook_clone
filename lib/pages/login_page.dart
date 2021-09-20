@@ -8,6 +8,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool isVisible = true;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -15,7 +16,10 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         appBar: PreferredSize(
           child: Container(
-            child: Image.asset('assets/images/facebook_banner.jpg', fit: BoxFit.cover,),
+            child: Image.asset(
+              'assets/images/facebook_banner.jpg',
+              fit: BoxFit.cover,
+            ),
             color: Colors.blue,
           ),
           preferredSize: Size.fromHeight(150),
@@ -69,14 +73,34 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Container(
-                  padding:
-                      const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                  width: width * .7,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white),
-                  child: TextFormField(
-                    decoration: InputDecoration(hintText: 'Senha'),
+                  width: width * .6,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 7,
+                        child: TextFormField(
+                          decoration: InputDecoration(hintText: 'Senha'),
+                          enableInteractiveSelection: false,
+                          enableSuggestions: false,
+                          obscureText: isVisible ? true : false,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: IconButton(
+                          splashColor: Colors.transparent,
+                          onPressed: () => setState(
+                            () => isVisible = !isVisible,
+                          ),
+                          icon: Icon(
+                            isVisible == true
+                                ? Icons.remove_red_eye
+                                : Icons.remove_red_eye_outlined,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Container(
