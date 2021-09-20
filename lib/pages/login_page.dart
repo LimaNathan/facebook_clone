@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,6 +11,18 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool isVisible = true;
+  List<String> languages = [
+    'Português',
+    'Inglês',
+    'Chinês',
+    'Espanhol',
+    'Francês',
+    'Russo',
+    'Alemão',
+    'Japonês',
+    'Turco',
+    'Coreano'
+  ];
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -41,9 +55,31 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Container(
-                      width: 47,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () => showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                              child: Container(
+                                padding: const EdgeInsets.all(20),
+                                child: ListView.separated(
+                                  itemBuilder: (_, index) => Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Text(
+                                      languages[index],
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                  ),
+                                  itemCount: languages.length,
+                                  separatorBuilder: (_, index) => Divider(),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                         child: Text(
                           'Mais',
                           style: TextStyle(
