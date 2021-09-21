@@ -14,8 +14,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool isVisible = true;
-  String _userEmail = '';
-  String _userPassword = '';
+  final _userEmailController = TextEditingController(text: '');
+  final _userPasswordController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +81,9 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.white),
                   child: TextFormField(
+                    controller: _userEmailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(hintText: 'Email ou telefone'),
-                    onChanged: (user) => _userEmail = user,
                   ),
                 ),
                 Container(
@@ -98,11 +98,11 @@ class _LoginPageState extends State<LoginPage> {
                       Expanded(
                         flex: 7,
                         child: TextFormField(
+                          controller: _userPasswordController ,
                           decoration: InputDecoration(hintText: 'Senha'),
                           enableInteractiveSelection: false,
                           enableSuggestions: false,
                           obscureText: isVisible ? true : false,
-                          onChanged: (password) => _userPassword = password,
                         ),
                       ),
                       Expanded(
