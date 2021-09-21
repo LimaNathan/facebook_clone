@@ -1,10 +1,12 @@
 import 'dart:ui';
 
+import 'package:facebook_clone/db/database.dart';
 import 'package:facebook_clone/widgets/lannguage_modal.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final AppDatabase? db;
+  const LoginPage({Key? key, this.db}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -12,6 +14,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool isVisible = true;
+  String _userEmail = '';
+  String _userPassword = '';
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +81,18 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.white),
                   child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(hintText: 'Email ou telefone'),
+                    onChanged: (user) => _userEmail = user,
                   ),
                 ),
                 Container(
-                  width: width * .6,
+                  padding:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  width: width * .7,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white),
                   child: Row(
                     children: [
                       Expanded(
@@ -91,12 +102,14 @@ class _LoginPageState extends State<LoginPage> {
                           enableInteractiveSelection: false,
                           enableSuggestions: false,
                           obscureText: isVisible ? true : false,
+                          onChanged: (password) => _userPassword = password,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: IconButton(
                           splashColor: Colors.transparent,
+                          disabledColor: Colors.transparent,
                           onPressed: () => setState(
                             () => isVisible = !isVisible,
                           ),
@@ -129,7 +142,8 @@ class _LoginPageState extends State<LoginPage> {
                       primary: Theme.of(context).primaryColor,
                     ),
                     onPressed: () {},
-                    child: Text('Esqueceu sua senha?'),
+                    child: Text(
+                        'Esqueceu sua senha?'), //botão sem função, apenas para completar a interface
                   ),
                 ),
                 Padding(
@@ -164,7 +178,9 @@ class _LoginPageState extends State<LoginPage> {
                     color: Color(0xFF008000),
                   ),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signupPage');
+                    },
                     child: Text(
                       'Cadastre-se',
                       style: TextStyle(
